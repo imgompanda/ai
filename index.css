@@ -1,0 +1,41 @@
+.chat-content {
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.chat-content::-webkit-scrollbar {
+  display: none;
+}
+.line {
+  margin-top: 10px;
+  display: flex;
+}
+.chat-box {
+  background-color: #edd600;
+  padding: 5px;
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 20px;
+  text-align: center;
+}
+.mine {
+  margin-left: auto;
+}
+
+input.chat-box {
+  margin-top: 100px;
+  width: 50%;
+  background-color: white;
+  position: fixed;
+  left: 300px;
+  bottom: 10px;
+  border-radius: 8px;
+}
+
+body {
+  background-color: #97b3cc;
+}
+
+button#send {
+  opacity: 0;
+}

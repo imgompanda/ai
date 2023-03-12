@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="chat-content">
+      <div class="line">
+        <span class="chat-box"
+          >안녕하세요 저는 AI입니다. 무엇을 답변해드릴까요?</span
+        >
+      </div>
+      <div class="line">
+        <span class="chat-box mine">안녕!</span>
+      </div>
+    </div>
+    <div class="input-box">
+      <input class="chat-box" id="input" /> <button id="send">전송</button>
+    </div>
+
+    <script type="module">
+      import { Configuration, OpenAIApi } from "https://cdn.skypack.dev/openai";
+
+      const input = document.getElementById("input");
+      const sendButton = document.getElementById("send");
+
+      input.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          sendButton.click();
+        }
+      });
+      document.querySelector("#send").addEventListener("click", function () {
+        var template = `<div class="line">
+                    <span class="chat-box mine">${
+                      document.querySelector("#input").value
+                    }</span>
+                  </div>`;
+        document
+          .querySelector(".chat-content")
+          .insertAdjacentHTML("beforeend", template);
+
+        const configuration = new Configuration({
+          apiKey: "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",
+        });
+        const openai = new OpenAIApi(configuration);
+
+        openai
+          .createCompletion({
+            model: "text-davinci-003",
+            prompt: document.querySelector("#input").value,
+            temperature: 0.7,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          })
+          .then((result) => {
+            var template = `<div class="line">
+                    <span class="chat-box">${result.data.choices[0].text}</span>
+                  </div>`;
+            document
+              .querySelector(".chat-content")
+              .insertAdjacentHTML("beforeend", template);
+          });
+      });
+    </script>
+  </body>
+</html>
